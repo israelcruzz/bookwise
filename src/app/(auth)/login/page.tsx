@@ -4,6 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { PiDoorOpenFill } from "react-icons/pi";
 import { Metadata } from "next";
+import { Logo } from "@/app/_components/logo";
 
 export const metadata: Metadata = {
   title: "Login",
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function Login() {
   return (
-    <main className="max-w-[1220px] w-full mx-auto p-6 justify-center gap-6 items-center flex flex-col md:flex-row">
+    <main className="max-w-[1220px] w-full h-full mx-auto p-6 justify-center gap-6 items-center flex flex-col md:flex-row">
       <section
         className="w-full md:w-1/2 h-[580px] bg-gray-700 rounded-lg flex justify-center items-center"
         style={{
@@ -19,26 +20,7 @@ export default function Login() {
             "linear-gradient(to bottom, #9694F5, rgba(0, 0, 0, 0.8)), url(/background-image.png) no-repeat center/cover",
         }}
       >
-        <div className="flex justify-center items-center gap-3">
-          <Image
-            src="/bookwise-icon.svg"
-            width={40}
-            height={40}
-            quality={100}
-            alt="Logo BookWise"
-            className="w-12 h-12"
-          />
-          <h1
-            className="font-bold text-3xl text-bookwise"
-            style={{
-              background: "linear-gradient(to left, #7FD1CC, #9694F5)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            BookWise
-          </h1>
-        </div>
+        <Logo />
       </section>
 
       <section className="w-full md:w-[600px] h-full items-center flex justify-center gap-6 md:p-24 flex-col">
