@@ -16,7 +16,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        <link
+          rel="icon"
+          href="/bookwise-icon.svg"
+          type="image/<generated>"
+          sizes="<generated>"
+        />
+      </head>
+      <body className={`${inter.className} bg-gray-900`}>{children}</body>
     </html>
   );
 }
