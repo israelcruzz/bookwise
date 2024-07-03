@@ -29,7 +29,6 @@ export const RatingCard = () => {
           </div>
         </div>
 
-        {/* TODO: INCREMENT RATING STARS */}
         <RatingStars rating={4} size={18} />
       </header>
 
