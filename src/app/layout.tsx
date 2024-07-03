@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SideMenu } from "./_components/side-menu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,10 +26,7 @@ export default function RootLayout({
           sizes="<generated>"
         />
       </head>
-      <body className={`${inter.className} bg-gray-900`}>
-        <SideMenu />
-        {children}
-      </body>
+      <body className={`${inter.className} bg-gray-900 w-full h-screen`}>{children}</body>
     </html>
   );
 }

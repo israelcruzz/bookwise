@@ -20,7 +20,7 @@ export default function Login() {
             "linear-gradient(to bottom, #9694F5, rgba(0, 0, 0, 0.8)), url(/background-image.png) no-repeat center/cover",
         }}
       >
-        <Logo />
+        <Logo imageSize="12" titleSize="3xl" />
       </section>
 
       <section className="w-full md:w-[600px] h-full items-center flex justify-center gap-6 md:p-24 flex-col">
