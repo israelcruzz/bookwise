@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import Image from "next/image";
+import { HiOutlineHome } from "react-icons/hi";
+import { RatingCard } from "../_components/rating-card";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -7,8 +9,18 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="">
-     <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias culpa repellat odit accusantium, deserunt autem natus beatae delectus obcaecati voluptatibus vero quos, voluptate at accusamus suscipit earum aspernatur? Eos quasi commodi, amet molestias rerum debitis dolorem maiores repellendus impedit illum vel! Et unde similique velit delectus maiores nesciunt eum odio, deserunt, exercitationem, vitae quos sit quae veniam corrupti possimus quaerat incidunt optio dolorum voluptates sequi recusandae vero commodi! Tenetur qui quos enim, atque sit sint natus soluta voluptatem neque aliquam nobis expedita culpa, porro mollitia eum. Laboriosam minima reprehenderit libero saepe quaerat quod blanditiis tempora repellendus nostrum impedit, laborum nisi eum eos officia doloremque! Consequuntur eum nisi rerum blanditiis unde placeat, dolorem, vitae est consectetur ipsum nesciunt nam similique? Quidem nisi, corporis esse iste voluptatum laboriosam maiores quos recusandae ea doloremque. Odio voluptates labore hic tenetur, libero ab veniam quasi non fugiat incidunt iure laboriosam vel accusantium esse, suscipit repellendus laudantium enim, velit iusto id molestiae voluptas! Perspiciatis aliquam vel, nemo repellat ratione id earum consequatur vitae facilis. Fuga quidem vitae neque pariatur quo nemo dolorum? Rem totam aspernatur, maxime sit minus nam temporibus necessitatibus eos quisquam minima dolorem aperiam tenetur. Officia, ratione adipisci, quae, saepe laboriosam voluptate excepturi alias obcaecati labore perferendis libero accusantium corrupti! Doloremque voluptas officiis quos ullam reiciendis vero quis obcaecati atque eos sunt sequi, voluptates modi! Repudiandae autem ipsa officiis excepturi eos non voluptate, deserunt atque nihil unde accusamus illum, sapiente temporibus veritatis possimus asperiores maiores quisquam cupiditate quod quas ad esse. Inventore, vitae provident? Dolores, corporis, iste deserunt repellat nesciunt debitis vel, sequi minus totam amet veniam numquam corrupti placeat animi dolor? Iure quasi facilis a nihil consequatur repudiandae possimus deleniti facere adipisci harum minima pariatur odit ab voluptatibus corporis autem, quia inventore sit est, saepe quos? Quod obcaecati quae eaque nesciunt unde! Error exercitationem voluptates asperiores commodi non neque culpa dicta aperiam! Corrupti rerum officia velit repellendus nulla natus ea aperiam quasi sit explicabo optio voluptas molestias culpa provident rem quod alias earum animi aut, ratione in dolore. Deleniti fugiat ratione itaque magni nihil pariatur neque quasi, ipsam et hic repudiandae perferendis cumque rerum vel placeat sed, dolorem, accusantium perspiciatis amet commodi saepe quaerat. Doloribus esse cum obcaecati consequatur eligendi non dignissimos, reiciendis nobis ducimus iusto porro illum minima ratione sit asperiores dicta. Omnis error eum commodi tempore possimus quidem magnam quam aperiam et eos nesciunt consequatur minus, laudantium quasi provident ullam neque repellat officia veniam optio voluptate dolores distinctio nam.</h1>
+    <main className="w-full">
+      <header className="text-white font-bold text-2xl flex items-center gap-3">
+        <HiOutlineHome size={32} color="#50B2C0" />
+        <h2 className="text-2xl">Início</h2>
+      </header>
+
+      <section className="w-full">
+        <h3 className="text-sm font-normal text-gray-200">Avaliações mais recentes</h3>
+
+        <RatingCard />
+
+      </section>
     </main>
   );
 }

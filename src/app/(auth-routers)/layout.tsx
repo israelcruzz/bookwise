@@ -10,12 +10,8 @@ export default function RootLayout({
       <div className="hidden md:block">
         <SideMenu />
       </div>
-      
-      
-      <div className="">
-        {children} 
-      </div>
-      
+
+      {children}
     </div>
   );
 }
