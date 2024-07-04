@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      backgroundImage: {
+        'gradient-border': "linear-gradient(90deg, #7FD1CC, #8381D9)"
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

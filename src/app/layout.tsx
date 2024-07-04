@@ -26,7 +26,7 @@ export default function RootLayout({
           sizes="<generated>"
         />
       </head>
-      <body className={`${inter.className} bg-gray-900 w-full h-screen`}>{children}</body>
+      <body className={`${inter.className} bg-[#0E1116] w-full h-screen`}>{children}</body>
     </html>
   );
 }

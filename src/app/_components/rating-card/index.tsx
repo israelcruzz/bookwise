@@ -20,7 +20,7 @@ export const RatingCard = () => {
             width={40}
             height={40}
             alt=""
-            className="rounded-full w-10 h-10"
+            className="rounded-full w-10 h-10 border-2 border-[#8381D9]"
           />
 
           <div>
@@ -39,7 +39,7 @@ export const RatingCard = () => {
           height={152}
           quality={100}
           alt=""
-          className=""
+          className="w-[108px] h-[152px] object-cover"
         />
 
         <div className="overflow-auto flex flex-col gap-5">
