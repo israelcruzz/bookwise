@@ -8,6 +8,7 @@ interface BookCardProps extends HTMLAttributes<HTMLDivElement> {
   author: string;
   ratingCount: number;
   imageUri: string;
+  read?: boolean;
 }
 
 export const BookCard = ({
@@ -15,17 +16,24 @@ export const BookCard = ({
   author,
   ratingCount,
   imageUri,
+  read,
   className,
   ...rest
 }: BookCardProps) => {
   return (
     <main
       className={twMerge(
-        "w-full bg-[#181C2A] rounded-lg gap-4 flex justify-between items-center p-5",
+        "relative w-full bg-[#181C2A] rounded-lg gap-4 flex justify-between items-center p-5",
         className
       )}
       {...rest}
     >
+      {read && (
+        <div className="absolute top-0 right-0 px-3 py-1 rounded-tr-lg bg-[#0A313C]">
+          <span className="text-[#50B2C0] font-bold text-[12px]">LIDO</span>
+        </div>
+      )}
+
       <Image
         src={imageUri}
         width={108}

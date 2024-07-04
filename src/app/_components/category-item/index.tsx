@@ -15,7 +15,7 @@ export const CategoryItem = ({
     <button
       className={`rounded-full flex justify-center items-center px-4 py-1 ${
         isActive
-          ? "bg-[#2A2879]"
+          ? "bg-[#2A2879] border border-[#2A2879]"
           : "border border-[#8381D9] hover:bg-[#8381D9] "
       }`}
       {...rest}

@@ -1,5 +1,6 @@
 "use client";
 
+import { BookCard } from "@/app/_components/book-card";
 import { CategoryItem } from "@/app/_components/category-item";
 import { SearchInput } from "@/app/_components/search-input";
 import { Metadata } from "next";
@@ -13,6 +14,10 @@ const CATEGORIES = [
   "Aventura",
   "Horror",
   "Romance",
+  "Fantasia",
+  "Mistério",
+  "Drama",
+  "Ciência",
 ];
 
 export default function Explorer() {
@@ -21,7 +26,7 @@ export default function Explorer() {
   return (
     <main className="w-full p-8">
       <div className="flex flex-col gap-8">
-        <header className="text-white font-bold justify-between text-2xl flex items-center">
+        <header className="text-white font-bold justify-between text-2xl flex flex-col md:flex-row gap-2 items-center">
           <div className="flex gap-3">
             <HiOutlineViewGrid color="#50B2C0" size={32} />
             <h2 className="text-2xl">Explorar</h2>
@@ -38,6 +43,21 @@ export default function Explorer() {
                 name={category}
                 isActive={categoryNow === category}
                 onClick={() => setCategoryNow(category)}
+              />
+            );
+          })}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {Array.from({ length: 6 }).map((_, i) => {
+            return (
+              <BookCard
+                author="Aditya Y. Bhargava"
+                imageUri="/books/entendendo-algoritmos.png"
+                ratingCount={3}
+                title="Entendendo Algoritmos"
+                key={i}
+                read={i === 0 || i === 5}
               />
             );
           })}
