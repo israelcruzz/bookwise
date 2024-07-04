@@ -25,7 +25,7 @@ export const SearchInput = () => {
       <input
         type="text"
         placeholder="Buscar livro ou autor"
-        className="bg-transparent outline-none text-[#8D95AF] text-sm font-normal"
+        className="flex-1 bg-transparent outline-none text-[#8D95AF] text-sm font-normal"
         onChange={(e) => setQuery(e.target.value)}
       />
       <CiSearch size={20} color="#303F73" />
