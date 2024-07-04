@@ -13,18 +13,18 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="w-full p-8 flex gap-6">
+    <main className="w-full p-8">
       <div className="flex flex-col gap-8">
         <header className="text-white font-bold text-2xl flex items-center gap-3">
           <HiOutlineHome size={32} color="#50B2C0" />
           <h2 className="text-2xl">Início</h2>
         </header>
 
-        <section className="w-full flex gap-4">
+        <section className="w-full flex flex-col md:flex-row gap-4">
           <div>
-            <div>
+            <div className="mb-8">
               <div className="mb-4">
-                <LinkText linkUri="/" title="Avaliações mais recentes" />
+                <LinkText linkUri="/" title="Sua última leitura" />
               </div>
 
               <ReadBookCard
@@ -62,13 +62,15 @@ export default function Home() {
                 imageUri="/books/Book.png"
                 ratingCount={4}
                 title="A revolução dos bichos"
+                className="h-[130px]"
               />
 
               <BookCard
-                author="George Orwell"
-                imageUri="/books/Book.png"
+                author="Eric Evans"
+                imageUri="/books/domain-driven-design.png"
                 ratingCount={4}
-                title="A revolução dos bichos"
+                title="DDD"
+                className="h-[130px]"
               />
             </div>
           </div>
