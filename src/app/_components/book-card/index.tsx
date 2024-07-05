@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { RatingStars } from "../rating-stars";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import {
   Sheet,
@@ -14,7 +14,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { BookOpen, BookmarkSimple } from "@phosphor-icons/react";
+import { BookOpen, BookmarkSimple, Check, X } from "@phosphor-icons/react";
 import { InfoSection } from "../info-section";
 import { formatDistanceDate } from "@/_utils/format-distance-date";
 import { RatingCommentCard } from "../rating-comment-card";
@@ -42,6 +42,8 @@ export const BookCard = ({
   className,
   ...rest
 }: BookCardProps) => {
+  const [viewRatingTextArea, setViewRatingTextArea] = useState<boolean>(false);
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -122,13 +124,55 @@ export const BookCard = ({
         <main className="flex flex-col gap-6">
           <div className="w-full flex justify-between">
             <h4 className="text-sm text-gray-300">Avaliações</h4>
-            <button className="text-base font-bold text-[#8381D9]">
+            <button
+              onClick={() => setViewRatingTextArea(true)}
+              className="text-base font-bold text-[#8381D9]"
+            >
               Avaliar
             </button>
           </div>
 
+          {viewRatingTextArea && (
+            <main className="bg-[#181C2A] p-6 flex flex-col gap-6 rounded-lg">
+              <header className="flex justify-between items-center">
+                <div className="flex gap-3 items-center">
+                  <Image
+                    src="https://github.com/josepholiveira.png"
+                    width={40}
+                    height={40}
+                    className="h-10 w-10 rounded-full"
+                    alt=""
+                  />
+
+                  <h2 className="text-base text-gray-100 font-bold">Joseph</h2>
+                </div>
+
+                <RatingStars size={28} rating={5} />
+              </header>
+
+              <textarea
+                name=""
+                id=""
+                rows={6}
+                className="rounded-sm bg-[#0E1116] px-5 py-3.5 text-gray-100 outline-none border border-[#303F73]"
+                placeholder="Escreva sua avaliação"
+              />
+
+              <div className="flex gap-2 justify-end">
+                <button
+                  onClick={() => setViewRatingTextArea(false)}
+                  className="rounded-sm bg-[#252D4A] hover:bg-[#252D4A]/60 p-2"
+                >
+                  <X size={24} color="#50B2C0" />
+                </button>
+                <button className="rounded-sm bg-[#252D4A] hover:bg-[#252D4A]/60 p-2">
+                  <Check size={24} color="#8381D9" />
+                </button>
+              </div>
+            </main>
+          )}
+
           <div className="grid grid-cols-1 gap-6">
-            {/*  */}
             <RatingCommentCard
               imageUri="https://github.com/diego3g.png"
               name="Diego"
