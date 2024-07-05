@@ -56,6 +56,8 @@ export default function Explorer() {
                 imageUri="/books/entendendo-algoritmos.png"
                 ratingCount={3}
                 title="Entendendo Algoritmos"
+                available={3}
+                categoryName="Computação, educação"
                 key={i}
                 read={i === 0 || i === 5}
               />
