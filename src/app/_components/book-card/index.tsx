@@ -17,6 +17,7 @@ import {
 import { BookOpen, BookmarkSimple } from "@phosphor-icons/react";
 import { InfoSection } from "../info-section";
 import { formatDistanceDate } from "@/_utils/format-distance-date";
+import { RatingCommentCard } from "../rating-comment-card";
 
 interface BookCardProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -127,64 +128,28 @@ export const BookCard = ({
           </div>
 
           <div className="grid grid-cols-1 gap-6">
-            <div className="bg-[#181C2A] flex flex-col gap-5 rounded-lg p-6">
-              <header className="flex justify-between">
-                <div className="flex gap-4 items-center">
-                  <Image
-                    src="https://github.com/axelvt.png"
-                    width={40}
-                    height={40}
-                    alt=""
-                    className="rounded-full w-10 h-10"
-                  />
-
-                  <div className="flex flex-col">
-                    <h3 className="font-bold text-gray-100 text-base">Axel</h3>
-                    <span className="text-gray-300 text-sm">
-                      {formatDistanceDate(new Date())}
-                    </span>
-                  </div>
-                </div>
-
-                <RatingStars size={16} rating={4} />
-              </header>
-
-              <p className="text-sm text-gray-300">
-                Ótimo livro, comprei ele um tempo atrás e deixei parado na
+            {/*  */}
+            <RatingCommentCard
+              imageUri="https://github.com/diego3g.png"
+              name="Diego"
+              ratingCount={4}
+              createdAt={new Date()}
+              description="Ótimo livro, comprei ele um tempo atrás e deixei parado na
                 estante, mas após um certo tempo, me deu um certo extase
                 momentaneo onde tive a vontade de ler, e com certeza foi uma
-                ótima escolha.
-              </p>
-            </div>
-            <div className="bg-[#181C2A] flex flex-col gap-5 rounded-lg p-6">
-              <header className="flex justify-between">
-                <div className="flex gap-4 items-center">
-                  <Image
-                    src="https://github.com/diego3g.png"
-                    width={40}
-                    height={40}
-                    alt=""
-                    className="rounded-full w-10 h-10"
-                  />
+                ótima escolha."
+            />
 
-                  <div className="flex flex-col">
-                    <h3 className="font-bold text-gray-100 text-base">Diego</h3>
-                    <span className="text-gray-300 text-sm">
-                      {formatDistanceDate(new Date())}
-                    </span>
-                  </div>
-                </div>
-
-                <RatingStars size={16} rating={4} />
-              </header>
-
-              <p className="text-sm text-gray-300">
-                Ótimo livro, comprei ele um tempo atrás e deixei parado na
+            <RatingCommentCard
+              imageUri="https://github.com/axelvt.png"
+              name="Axel"
+              ratingCount={2}
+              createdAt={new Date()}
+              description="Ótimo livro, comprei ele um tempo atrás e deixei parado na
                 estante, mas após um certo tempo, me deu um certo extase
                 momentaneo onde tive a vontade de ler, e com certeza foi uma
-                ótima escolha.
-              </p>
-            </div>
+                ótima escolha."
+            />
           </div>
         </main>
       </SheetContent>
