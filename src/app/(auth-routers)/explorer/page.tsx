@@ -52,6 +52,7 @@ export default function Explorer() {
           {Array.from({ length: 6 }).map((_, i) => {
             return (
               <BookCard
+                pages={200}
                 author="Aditya Y. Bhargava"
                 imageUri="/books/entendendo-algoritmos.png"
                 ratingCount={3}

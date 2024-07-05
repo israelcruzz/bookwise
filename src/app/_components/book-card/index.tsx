@@ -14,7 +14,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { BookmarkSimple } from "@phosphor-icons/react";
+import { BookOpen, BookmarkSimple } from "@phosphor-icons/react";
 import { InfoSection } from "../info-section";
 
 interface BookCardProps extends HTMLAttributes<HTMLDivElement> {
@@ -24,6 +24,7 @@ interface BookCardProps extends HTMLAttributes<HTMLDivElement> {
   available: number;
   imageUri: string;
   categoryName: string;
+  pages: number;
   read?: boolean;
 }
 
@@ -35,6 +36,7 @@ export const BookCard = ({
   available,
   imageUri,
   read,
+  pages,
   className,
   ...rest
 }: BookCardProps) => {
@@ -101,10 +103,18 @@ export const BookCard = ({
                 </div>
               </div>
             </header>
-            <footer>
-              <InfoSection sizeIcon={24} icon={BookmarkSimple} >
-                <span>Categoria</span>
-                <h3>{categoryName}</h3>
+            <footer className="mt-3 mb-1 flex gap-6 items-center">
+              <InfoSection sizeIcon={24} icon={BookmarkSimple}>
+                <span className="text-sm text-gray-300">Categoria</span>
+                <h3 className="text-base text-gray-200 font-bold">
+                  {categoryName}
+                </h3>
+              </InfoSection>
+              <InfoSection sizeIcon={24} icon={BookOpen}>
+                <span className="text-sm text-gray-300">Páginas</span>
+                <h3 className="text-base text-gray-200 font-bold">
+                  {pages}
+                </h3>
               </InfoSection>
             </footer>
           </main>
