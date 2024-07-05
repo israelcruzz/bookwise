@@ -16,8 +16,19 @@ import {
 } from "@/components/ui/sheet";
 import { BookOpen, BookmarkSimple, Check, X } from "@phosphor-icons/react";
 import { InfoSection } from "../info-section";
-import { formatDistanceDate } from "@/_utils/format-distance-date";
 import { RatingCommentCard } from "../rating-comment-card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
+import { PiDoorOpenFill } from "react-icons/pi";
 
 interface BookCardProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -43,6 +54,7 @@ export const BookCard = ({
   ...rest
 }: BookCardProps) => {
   const [viewRatingTextArea, setViewRatingTextArea] = useState<boolean>(false);
+  const [viewModalLogin, setViewModalLogin] = useState<boolean>(false);
 
   return (
     <Sheet>
@@ -166,7 +178,11 @@ export const BookCard = ({
                   <X size={24} color="#50B2C0" />
                 </button>
                 <button className="rounded-sm bg-[#252D4A] hover:bg-[#252D4A]/60 p-2">
-                  <Check size={24} color="#8381D9" />
+                  <Check
+                    size={24}
+                    color="#8381D9"
+                    onClick={() => setViewModalLogin(true)}
+                  />
                 </button>
               </div>
             </main>
@@ -196,6 +212,31 @@ export const BookCard = ({
             />
           </div>
         </main>
+
+        <Dialog open={viewModalLogin} onOpenChange={setViewModalLogin}>
+          <DialogTrigger></DialogTrigger>
+
+          <DialogContent>
+            <DialogTitle>Faça login para deixar sua avaliação</DialogTitle>
+
+            <div>
+              <div className="w-full flex flex-col gap-5">
+                <Button className="h-[72px] flex justify-start gap-5 bg-[#252D4A] hover:bg-[#252D4A]/40">
+                  <FcGoogle size={24} />
+                  <span className="font-bold text-lg text-gray-200">
+                    Entrar com Google
+                  </span>
+                </Button>
+                <Button className="h-[72px] flex justify-start gap-5 bg-[#252D4A] hover:bg-[#252D4A]/40">
+                  <FaGithub size={24} color="#FFFFFF" />
+                  <span className="font-bold text-lg text-gray-200">
+                    Entrar com GitHub
+                  </span>
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </SheetContent>
     </Sheet>
   );
