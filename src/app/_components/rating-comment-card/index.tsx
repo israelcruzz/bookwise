@@ -8,6 +8,7 @@ interface RatingCommentCardProps {
   createdAt: Date;
   description: string;
   ratingCount: number;
+  isActive?: boolean;
 }
 
 export const RatingCommentCard = ({
@@ -16,9 +17,10 @@ export const RatingCommentCard = ({
   createdAt,
   description,
   ratingCount,
+  isActive
 }: RatingCommentCardProps) => {
   return (
-    <main className="bg-[#181C2A] flex flex-col gap-5 rounded-lg p-6">
+    <main className={`${ isActive ? "bg-[#252D4A]" : "bg-[#181C2A]" } flex flex-col gap-5 rounded-lg p-6`}>
       <header className="flex justify-between">
         <div className="flex gap-4 items-center">
           <Image

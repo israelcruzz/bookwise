@@ -198,6 +198,7 @@ export const BookCard = ({
                 estante, mas após um certo tempo, me deu um certo extase
                 momentaneo onde tive a vontade de ler, e com certeza foi uma
                 ótima escolha."
+              isActive
             />
 
             <RatingCommentCard
