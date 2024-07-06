@@ -32,7 +32,10 @@ export default function Explorer() {
             <h2 className="text-2xl">Explorar</h2>
           </div>
 
-          <SearchInput />
+          <div className="w-[433px]">
+            <SearchInput placeholder="Busque pelo nome do livro ou autor" />
+          </div>
+          
         </header>
 
         <div className="flex gap-2 flex-wrap">

@@ -1,11 +1,16 @@
 "use client";
 
-import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import {
+  FormEvent,
+  HTMLAttributes,
+  useState,
+} from "react";
 import { CiSearch } from "react-icons/ci";
 
-export const SearchInput = () => {
+interface SearchInputProps extends HTMLAttributes<HTMLInputElement> { placeholder: string }
+
+export const SearchInput = ({ placeholder ,...props }: SearchInputProps) => {
   const [query, setQuery] = useState<string>("");
   const router = useRouter();
 
@@ -20,11 +25,12 @@ export const SearchInput = () => {
   return (
     <form
       onSubmit={handleSubmitForm}
-      className="w-[433px] border border-[#303F73] px-5 py-3.5 flex justify-between rounded-sm"
+      className="w-full border border-[#303F73] px-5 py-3.5 flex justify-between rounded-sm"
     >
       <input
         type="text"
-        placeholder="Buscar livro ou autor"
+        {...props}
+        placeholder={placeholder}
         className="flex-1 bg-transparent outline-none text-[#8D95AF] text-sm font-normal"
         onChange={(e) => setQuery(e.target.value)}
       />
