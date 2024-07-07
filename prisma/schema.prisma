@@ -60,24 +60,35 @@ model VerificationToken {
 }
 
 model Book {
-  id         String     @id @default(uuid())
+  id         String              @id @default(uuid())
   name       String
   author     String
   coverUrl   String
+  summary    String
   totalPages Int
-  createdAt  DateTime   @default(now())
-  categories Category[]
+  createdAt  DateTime            @default(now())
+  categories CategoriesOnBooks[]
   rating     Rating[]
 
   @@map("books")
 }
 
 model Category {
-  id    String @id @default(uuid())
-  name  String @unique
-  books Book[]
+  id    String              @id @default(uuid())
+  name  String              @unique
+  books CategoriesOnBooks[]
 
   @@map("categories")
+}
+
+model CategoriesOnBooks {
+  book_id    String
+  categoryId String
+
+  book     Book     @relation(fields: [book_id], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@id([book_id, categoryId])
 }
 
 model Rating {
