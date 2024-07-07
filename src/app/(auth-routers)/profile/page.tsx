@@ -1,9 +1,6 @@
-import { formatDistanceDate } from "@/_utils/format-distance-date";
 import { InfoSection } from "@/app/_components/info-section";
 import { MeCommentCard } from "@/app/_components/me-comment-card";
-import { RatingStars } from "@/app/_components/rating-stars";
 import { SearchInput } from "@/app/_components/search-input";
-import { BookmarkSimple, Books, UserList } from "@phosphor-icons/react";
 import { PiBooks, PiUserList, PiBookmarkSimple } from "react-icons/pi";
 import Image from "next/image";
 import { HiOutlineUser } from "react-icons/hi";
