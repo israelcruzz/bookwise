@@ -3,7 +3,7 @@ import { books } from "./constants/books";
 import { categories } from "./constants/categories";
 import { ratings } from "./constants/ratings";
 import { users } from "./constants/users";
-export const prisma = new PrismaClient();
+import { prisma } from "@/_utils/prisma";
 
 async function main() {
   await prisma.rating.deleteMany();

@@ -5,6 +5,7 @@ import { FaGithub } from "react-icons/fa";
 import { PiDoorOpenFill } from "react-icons/pi";
 import { Metadata } from "next";
 import { Logo } from "@/app/_components/logo";
+import { AreaButtons } from "../_components/area-buttons";
 
 export const metadata: Metadata = {
   title: "Login",
@@ -31,26 +32,7 @@ export default function Login() {
           </p>
         </div>
 
-        <div className="w-full flex flex-col gap-5">
-          <Button className="h-[72px] flex justify-start gap-5 bg-[#252D4A] hover:bg-[#252D4A]/40">
-            <FcGoogle size={24} />
-            <span className="font-bold text-lg text-gray-200">
-              Entrar com Google
-            </span>
-          </Button>
-          <Button className="h-[72px] flex justify-start gap-5 bg-[#252D4A] hover:bg-[#252D4A]/40">
-            <FaGithub size={24} color="#FFFFFF" />
-            <span className="font-bold text-lg text-gray-200">
-              Entrar com GitHub
-            </span>
-          </Button>
-          <Button className="h-[72px] flex justify-start gap-5 bg-[#252D4A] hover:bg-[#252D4A]/40">
-            <PiDoorOpenFill size={24} />
-            <span className="font-bold text-lg text-gray-200">
-              Acessar como visitante
-            </span>
-          </Button>
-        </div>
+        <AreaButtons />
       </section>
     </main>
   );
