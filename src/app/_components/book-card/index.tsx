@@ -29,27 +29,16 @@ import { Button } from "@/components/ui/button";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { PiDoorOpenFill } from "react-icons/pi";
+import { IBook } from "@/app/(auth-routers)/page";
 
 interface BookCardProps extends HTMLAttributes<HTMLDivElement> {
-  title: string;
-  author: string;
-  ratingCount: number;
-  available: number;
-  imageUri: string;
-  categoryName: string;
-  pages: number;
+  book: IBook;
   read?: boolean;
 }
 
 export const BookCard = ({
-  title,
-  author,
-  categoryName,
-  ratingCount,
-  available,
-  imageUri,
+  book,
   read,
-  pages,
   className,
   ...rest
 }: BookCardProps) => {
@@ -73,21 +62,21 @@ export const BookCard = ({
           )}
 
           <Image
-            src={imageUri}
+            src={book.coverUrl}
             width={108}
             height={94}
             quality={100}
-            alt={`Book ${title} Image`}
+            alt={`Book ${book.name} Image`}
             className="h-full"
           />
 
           <div className="w-full h-full flex flex-col justify-between">
             <div>
-              <h2 className="text-base font-bold text-gray-100">{title}</h2>
-              <span className="text-sm text-gray-400">{author}</span>
+              <h2 className="text-base font-bold text-gray-100 line-clamp-2">{book.name}</h2>
+              <span className="text-sm text-gray-400">{book.author}</span>
             </div>
 
-            <RatingStars rating={available} size={16} />
+            <RatingStars rating={5} size={16} />
           </div>
         </main>
       </SheetTrigger>
@@ -96,25 +85,25 @@ export const BookCard = ({
           <main className="bg-[#181C2A] rounded-lg pb-4 pt-6 px-8">
             <header className="flex gap-8 border-b-[0.5px] pb-10 border-[#252D4A]">
               <Image
-                src={imageUri}
+                src={book.coverUrl}
                 width={171}
                 height={242}
                 quality={100}
-                alt={`Book ${title} Image`}
+                alt={`Book ${book.name} Image`}
                 className="h-full"
               />
 
               <div className="flex flex-col justify-between">
                 <div className="flex flex-col gap-1">
-                  <h2 className="font-bold text-lg text-gray-100">{title}</h2>
+                  <h2 className="font-bold text-lg text-gray-100">{book.name}</h2>
                   <span className="text-base font-normal text-gray-300">
-                    {author}
+                    {book.author}
                   </span>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <RatingStars size={20} rating={available} />
+                  <RatingStars size={20} rating={5} />
                   <span className="text-sm text-gray-400">
-                    {ratingCount} avaliações
+                    {book._count.rating} {book._count.rating === 1 ? "avaliação" : "avaliações"} 
                   </span>
                 </div>
               </div>
@@ -123,12 +112,12 @@ export const BookCard = ({
               <InfoSection sizeIcon={24} icon={BookmarkSimple}>
                 <span className="text-sm text-gray-300">Categoria</span>
                 <h3 className="text-base text-gray-200 font-bold">
-                  {categoryName}
+                  {book.categories.map((category) => category.category.name).join(", ")}
                 </h3>
               </InfoSection>
               <InfoSection sizeIcon={24} icon={BookOpen}>
                 <span className="text-sm text-gray-300">Páginas</span>
-                <h3 className="text-base text-gray-200 font-bold">{pages}</h3>
+                <h3 className="text-base text-gray-200 font-bold">{book.totalPages}</h3>
               </InfoSection>
             </footer>
           </main>

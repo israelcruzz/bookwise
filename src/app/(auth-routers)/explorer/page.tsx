@@ -3,7 +3,6 @@
 import { BookCard } from "@/app/_components/book-card";
 import { CategoryItem } from "@/app/_components/category-item";
 import { SearchInput } from "@/app/_components/search-input";
-import { Metadata } from "next";
 import { useState } from "react";
 import { HiOutlineViewGrid } from "react-icons/hi";
 
@@ -52,7 +51,7 @@ export default function Explorer() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {Array.from({ length: 6 }).map((_, i) => {
+          {/* {Array.from({ length: 6 }).map((_, i) => {
             return (
               <BookCard
                 pages={200}
@@ -66,7 +65,7 @@ export default function Explorer() {
                 read={i === 0 || i === 5}
               />
             );
-          })}
+          })} */}
         </div>
       </div>
     </main>

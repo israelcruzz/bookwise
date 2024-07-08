@@ -2,16 +2,36 @@ import { Metadata } from "next";
 import { HiOutlineHome } from "react-icons/hi";
 import { RatingCard } from "../_components/rating-card";
 import { BookCard } from "../_components/book-card";
-import { IoIosArrowForward } from "react-icons/io";
-import Link from "next/link";
 import { ReadBookCard } from "../_components/read-book-card";
 import { LinkText } from "../_components/link-text";
+import { prisma } from "@/_utils/prisma";
+import { Book, Category } from "@prisma/client";
 
 export const metadata: Metadata = {
   title: "Home",
 };
 
-export default function Home() {
+export interface IBook extends Book {
+  _count: { rating: number };
+  categories: { category: Category }[];
+}
+
+export default async function Home() {
+  const books: IBook[] = await prisma.book.findMany({
+    include: {
+      _count: {
+        select: { rating: true },
+      },
+      categories: {
+        include: {
+          category: true,
+        },
+      },
+    },
+  });
+
+  console.log(books[0]);
+
   return (
     <main className="w-full p-8">
       <div className="flex flex-col gap-8">
@@ -20,7 +40,7 @@ export default function Home() {
           <h2 className="text-2xl">Início</h2>
         </header>
 
-        <section className="w-full flex flex-col md:flex-row gap-4">
+        <section className="w-full flex flex-col md:flex-row gap-4 ">
           <div>
             <div className="mb-8">
               <div className="mb-4">
@@ -57,21 +77,16 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col gap-3">
-              <BookCard
-                author="George Orwell"
-                imageUri="/books/Book.png"
-                ratingCount={4}
-                title="A revolução dos bichos"
-                className="h-[130px]"
-              />
-
-              <BookCard
-                author="Eric Evans"
-                imageUri="/books/domain-driven-design.png"
-                ratingCount={4}
-                title="DDD"
-                className="h-[130px]"
-              />
+              {books.slice(0, 4).map((book, i) => {
+                return (
+                  <BookCard
+                    book={book}
+                    title="A revolução dos bichos"
+                    className="h-[130px]"
+                    key={i}
+                  />
+                );
+              })}
             </div>
           </div>
         </section>
