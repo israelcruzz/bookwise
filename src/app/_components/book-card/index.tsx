@@ -30,20 +30,27 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { PiDoorOpenFill } from "react-icons/pi";
 import { IBook } from "@/app/(auth-routers)/page";
+import { signIn, useSession } from "next-auth/react";
 
 interface BookCardProps extends HTMLAttributes<HTMLDivElement> {
   book: IBook;
   read?: boolean;
 }
 
-export const BookCard = ({
-  book,
-  read,
-  className,
-  ...rest
-}: BookCardProps) => {
+export const BookCard = ({ book, read, className, ...rest }: BookCardProps) => {
   const [viewRatingTextArea, setViewRatingTextArea] = useState<boolean>(false);
   const [viewModalLogin, setViewModalLogin] = useState<boolean>(false);
+
+  const { data } = useSession();
+
+  const handleViewRatingModal = () => {
+    if (!data?.user) {
+      setViewModalLogin(true);
+      return;
+    }
+
+    setViewRatingTextArea(true);
+  };
 
   return (
     <Sheet>
@@ -72,7 +79,9 @@ export const BookCard = ({
 
           <div className="w-full h-full flex flex-col justify-between">
             <div>
-              <h2 className="text-base font-bold text-gray-100 line-clamp-2">{book.name}</h2>
+              <h2 className="text-base font-bold text-gray-100 line-clamp-2">
+                {book.name}
+              </h2>
               <span className="text-sm text-gray-400">{book.author}</span>
             </div>
 
@@ -90,12 +99,14 @@ export const BookCard = ({
                 height={242}
                 quality={100}
                 alt={`Book ${book.name} Image`}
-                className="h-full"
+                className="object-cover w-[100px] md:h-full md:w-[171px]"
               />
 
               <div className="flex flex-col justify-between">
                 <div className="flex flex-col gap-1">
-                  <h2 className="font-bold text-lg text-gray-100">{book.name}</h2>
+                  <h2 className="font-bold text-base md:text-lg text-gray-100">
+                    {book.name}
+                  </h2>
                   <span className="text-base font-normal text-gray-300">
                     {book.author}
                   </span>
@@ -103,7 +114,8 @@ export const BookCard = ({
                 <div className="flex flex-col gap-1">
                   <RatingStars size={20} rating={5} />
                   <span className="text-sm text-gray-400">
-                    {book._count.rating} {book._count.rating === 1 ? "avaliação" : "avaliações"} 
+                    {book._count.rating}{" "}
+                    {book._count.rating === 1 ? "avaliação" : "avaliações"}
                   </span>
                 </div>
               </div>
@@ -112,12 +124,16 @@ export const BookCard = ({
               <InfoSection sizeIcon={24} icon={BookmarkSimple}>
                 <span className="text-sm text-gray-300">Categoria</span>
                 <h3 className="text-base text-gray-200 font-bold">
-                  {book.categories.map((category) => category.category.name).join(", ")}
+                  {book.categories
+                    .map((category) => category.category.name)
+                    .join(", ")}
                 </h3>
               </InfoSection>
               <InfoSection sizeIcon={24} icon={BookOpen}>
                 <span className="text-sm text-gray-300">Páginas</span>
-                <h3 className="text-base text-gray-200 font-bold">{book.totalPages}</h3>
+                <h3 className="text-base text-gray-200 font-bold">
+                  {book.totalPages}
+                </h3>
               </InfoSection>
             </footer>
           </main>
@@ -126,7 +142,7 @@ export const BookCard = ({
           <div className="w-full flex justify-between">
             <h4 className="text-sm text-gray-300">Avaliações</h4>
             <button
-              onClick={() => setViewRatingTextArea(true)}
+              onClick={handleViewRatingModal}
               className="text-base font-bold text-[#8381D9]"
             >
               Avaliar
@@ -211,13 +227,19 @@ export const BookCard = ({
 
             <div>
               <div className="w-full flex flex-col gap-5">
-                <Button className="h-[72px] flex justify-start gap-5 bg-[#252D4A] hover:bg-[#252D4A]/40">
+                <Button
+                  className="h-[72px] flex justify-start gap-5 bg-[#252D4A] hover:bg-[#252D4A]/40"
+                  onClick={() => signIn("google")}
+                >
                   <FcGoogle size={24} />
                   <span className="font-bold text-lg text-gray-200">
                     Entrar com Google
                   </span>
                 </Button>
-                <Button className="h-[72px] flex justify-start gap-5 bg-[#252D4A] hover:bg-[#252D4A]/40">
+                <Button
+                  className="h-[72px] flex justify-start gap-5 bg-[#252D4A] hover:bg-[#252D4A]/40"
+                  onClick={() => signIn("github")}
+                >
                   <FaGithub size={24} color="#FFFFFF" />
                   <span className="font-bold text-lg text-gray-200">
                     Entrar com GitHub

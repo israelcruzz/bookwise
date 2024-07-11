@@ -8,19 +8,6 @@ import { useEffect, useState } from "react";
 import { HiOutlineViewGrid } from "react-icons/hi";
 import { IBook } from "../page";
 
-const CATEGORIES = [
-  "Todos",
-  "Terror",
-  "Ficção",
-  "Aventura",
-  "Horror",
-  "Romance",
-  "Fantasia",
-  "Mistério",
-  "Drama",
-  "Ciência",
-];
-
 export default function Explorer() {
   const [categoryNow, setCategoryNow] = useState<string>("Todos");
   const [books, setBooks] = useState<IBook[]>();
