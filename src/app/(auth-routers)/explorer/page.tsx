@@ -53,7 +53,7 @@ export default function Explorer() {
     const url = `/api/books/${categoryNow}`;
 
     const data = await fetch(url);
-    const response = await data.json();
+    const response: IBook[] = await data.json();
 
     setBooks(response);
   };
@@ -62,6 +62,10 @@ export default function Explorer() {
     fetchBookDatas();
     fetchCategoriesData();
   }, []);
+
+  useEffect(() => {
+    fetchBookDatesWithCategory();
+  }, [categoryNow]);
 
   return (
     <main className="w-full p-8">

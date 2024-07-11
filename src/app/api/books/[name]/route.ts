@@ -9,23 +9,40 @@ export async function GET(
     throw new Error("Books Not Found");
   }
 
-  const books = await prisma.book.findMany({
-    where: {
-      categories: {
-        some: { category: { name: name } },
-      },
-    },
-    include: {
-      _count: {
-        select: { rating: true },
-      },
-      categories: {
-        include: {
-          category: true,
+  let books;
+
+  if (name === "Todos") {
+    books = await prisma.book.findMany({
+      include: {
+        _count: {
+          select: { rating: true },
+        },
+        categories: {
+          include: {
+            category: true,
+          },
         },
       },
-    },
-  });
+    });
+  } else {
+    books = await prisma.book.findMany({
+      where: {
+        categories: {
+          some: { category: { name: name } },
+        },
+      },
+      include: {
+        _count: {
+          select: { rating: true },
+        },
+        categories: {
+          include: {
+            category: true,
+          },
+        },
+      },
+    });
+  }
 
   return Response.json(books);
 }
