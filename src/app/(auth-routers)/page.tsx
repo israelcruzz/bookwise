@@ -6,6 +6,7 @@ import { ReadBookCard } from "../_components/read-book-card";
 import { LinkText } from "../_components/link-text";
 import { prisma } from "@/_utils/prisma";
 import { Book, Category } from "@prisma/client";
+import { getServerSession } from "next-auth/next";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -17,6 +18,8 @@ export interface IBook extends Book {
 }
 
 export default async function Home() {
+  const session = await getServerSession();
+
   const books: IBook[] = await prisma.book.findMany({
     include: {
       _count: {
@@ -30,7 +33,43 @@ export default async function Home() {
     },
   });
 
-  console.log(books[0]);
+  const ratingsUser = await prisma.rating.findMany({
+    where: {
+      userId: session?.user.id,
+    },
+  });
+
+  const readBook = await prisma.rating.findFirst({
+    where: {
+      userId: session?.user.id,
+    },
+    include: {
+      book: true,
+    },
+  });
+
+  const lastRatings = await prisma.rating.findMany({
+    include: {
+      book: true,
+      user: true,
+    },
+    take: 10,
+  });
+
+  const findUserReadBook = (bookId: string) => {
+    const filteredRating = ratingsUser.find(
+      (rating) => rating.bookId === bookId
+    );
+
+    console.log(ratingsUser)
+    console.log(filteredRating)
+
+    if (!filteredRating) {
+      return false;
+    }
+
+    return true;
+  };
 
   return (
     <main className="w-full p-8">
@@ -40,22 +79,23 @@ export default async function Home() {
           <h2 className="text-2xl">Início</h2>
         </header>
 
-        <section className="w-full flex flex-col md:flex-row gap-4 ">
+        <section className="w-full flex flex-col lg:flex-row gap-4 ">
           <div>
-            <div className="mb-8">
-              <div className="mb-4">
-                <LinkText linkUri="/" title="Sua última leitura" />
+            {session?.user && readBook && (
+              <div className="mb-8">
+                <div className="mb-4">
+                  <LinkText linkUri="/" title="Sua última leitura" />
+                </div>
+                <ReadBookCard
+                  imageUri={readBook.book.coverUrl ?? ""}
+                  author={readBook.book.author}
+                  title={readBook.book.name}
+                  ratingCount={readBook.rate}
+                  sinopse={readBook.book.summary}
+                  createdAt={readBook.createdAt}
+                />
               </div>
-
-              <ReadBookCard
-                imageUri="/books/codigo-limpo.png"
-                author="Aditya Bhargava"
-                title="Código Limpo"
-                ratingCount={5}
-                sinopse="lorem sianiaf pdakfoakf pdkaofkapokfpa. Adef jusifcs, scawfa. lorem sianiaf pdakfoakf pdkaofkapokfpa. Adef jusifcs, scawfa."
-                createdAt={new Date(2024, 4, 20, 6, 30, 50)}
-              />
-            </div>
+            )}
 
             <div>
               <h3 className="text-sm font-normal text-gray-200 mb-4">
@@ -63,15 +103,26 @@ export default async function Home() {
               </h3>
 
               <div className="grid grid-cols-1 gap-3">
-                <RatingCard />
-                <RatingCard />
-                <RatingCard />
-                <RatingCard />
+                {lastRatings.map((rating, i) => {
+                  return (
+                    <RatingCard
+                      author={rating.book.author}
+                      bookCoverUrl={rating.book.coverUrl}
+                      bookName={rating.book.name}
+                      countRating={rating.rate}
+                      dateRating={rating.createdAt}
+                      name={rating.user.name!}
+                      profileImageUrl={rating.user.image!}
+                      summary={rating.book.summary}
+                      key={`Rating for Book ${rating.book.name} - ${i}`}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>
 
-          <div className="w-full">
+          <div className="w-full lg:w-2/3">
             <div className="mb-4">
               <LinkText linkUri="/" title="Livros populares" />
             </div>
@@ -81,7 +132,7 @@ export default async function Home() {
                 return (
                   <BookCard
                     book={book}
-                    title="A revolução dos bichos"
+                    read={findUserReadBook(book.id)}
                     className="h-[130px]"
                     key={i}
                   />

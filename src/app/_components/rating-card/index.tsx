@@ -3,20 +3,37 @@
 import Image from "next/image";
 import { useState } from "react";
 import { RatingStars } from "../rating-stars";
+import { formatDistanceDate } from "@/_utils/format-distance-date";
 
-export const RatingCard = () => {
+interface RatingCardProps {
+  profileImageUrl: string;
+  name: string;
+  dateRating: Date;
+  countRating: number;
+  bookCoverUrl: string;
+  bookName: string;
+  author: string;
+  summary: string;
+}
+
+export const RatingCard = ({
+  profileImageUrl,
+  name,
+  dateRating,
+  countRating,
+  bookCoverUrl,
+  bookName,
+  author,
+  summary,
+}: RatingCardProps) => {
   const [viewAllText, setViewAllText] = useState<boolean>(false);
-
-  const onChangeRating = (currentRating: number) => {
-    console.log(currentRating);
-  }
 
   return (
     <main className="w-full max-h-[280px] flex flex-col gap-8 bg-[#181C2A] rounded-lg p-6">
       <header className="flex justify-between">
         <div className="flex gap-4">
           <Image
-            src="https://github.com/israelcruzz.png"
+            src={profileImageUrl}
             width={40}
             height={40}
             alt=""
@@ -24,17 +41,19 @@ export const RatingCard = () => {
           />
 
           <div>
-            <h4 className="text-base font-normal text-gray-100">Israel Cruz</h4>
-            <span className="text-sm font-normal text-gray-400">Hoje</span>
+            <h4 className="text-base font-normal text-gray-100">{name}</h4>
+            <span className="text-sm font-normal text-gray-400">
+              {formatDistanceDate(dateRating)}
+            </span>
           </div>
         </div>
 
-        <RatingStars rating={4} size={18} />
+        <RatingStars rating={countRating} size={18} />
       </header>
 
       <footer className="flex h-[152px] gap-5">
         <Image
-          src="/books/o-hobbit.png"
+          src={bookCoverUrl}
           width={108}
           height={152}
           quality={100}
@@ -44,10 +63,8 @@ export const RatingCard = () => {
 
         <div className="overflow-auto flex flex-col gap-5">
           <div className="flex flex-col">
-            <h2 className="text-base font-bold text-gray-100">O Hobbit</h2>
-            <span className="text-sm font-normal text-gray-400">
-              J.R.R. Tolkien
-            </span>
+            <h2 className="text-base font-bold text-gray-100">{bookName}</h2>
+            <span className="text-sm font-normal text-gray-400">{author}</span>
           </div>
 
           <p
@@ -55,12 +72,7 @@ export const RatingCard = () => {
               viewAllText ? "line-clamp-none" : "line-clamp-3"
             } `}
           >
-            Semper et sapien proin vitae nisi. Feugiat neque integer donec et
-            aenean posuere amet ultrices. Cras fermentum id pulvinar varius leo
-            a in. Amet libero pharetra nunc elementum fringilla velit ipsum. Sed
-            vulputate massa velit nibh, Cras fermentum id pulvinar varius leo a
-            in. Amet libero pharetra nunc elementum fringilla velit ipsum. Sed
-            vulputate massa velit nibh...
+            {summary}
             <button
               onClick={() => setViewAllText(!viewAllText)}
               className="text-sm font-medium text-[#8381D9] hover:text-[#8381D9]/60"

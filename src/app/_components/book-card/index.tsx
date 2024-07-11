@@ -67,7 +67,7 @@ export const BookCard = ({
             height={94}
             quality={100}
             alt={`Book ${book.name} Image`}
-            className="h-full"
+            className="h-full object-cover"
           />
 
           <div className="w-full h-full flex flex-col justify-between">
@@ -141,7 +141,7 @@ export const BookCard = ({
                     src="https://github.com/josepholiveira.png"
                     width={40}
                     height={40}
-                    className="h-10 w-10 rounded-full"
+                    className="h-10 w-10 rounded-full object-cover"
                     alt=""
                   />
 
