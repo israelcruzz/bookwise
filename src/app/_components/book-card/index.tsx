@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { RatingStars } from "../rating-stars";
-import { HTMLAttributes, useState } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import {
   Sheet,
@@ -31,17 +31,35 @@ import { FaGithub } from "react-icons/fa";
 import { PiDoorOpenFill } from "react-icons/pi";
 import { IBook } from "@/app/(auth-routers)/page";
 import { signIn, useSession } from "next-auth/react";
+import { Rating } from "@prisma/client";
 
 interface BookCardProps extends HTMLAttributes<HTMLDivElement> {
   book: IBook;
   read?: boolean;
 }
 
+interface IRatings extends Rating {
+  user: {
+    name: string;
+    image: string;
+  };
+}
+
 export const BookCard = ({ book, read, className, ...rest }: BookCardProps) => {
   const [viewRatingTextArea, setViewRatingTextArea] = useState<boolean>(false);
   const [viewModalLogin, setViewModalLogin] = useState<boolean>(false);
+  const [ratings, setRatings] = useState<IRatings[]>();
 
   const { data } = useSession();
+
+  const fetchRatingToBook = async () => {
+    const url = `/api/ratings/${book.id}`;
+
+    const data = await fetch(url);
+    const response: IRatings[] = await data.json();
+
+    setRatings(response);
+  };
 
   const handleViewRatingModal = () => {
     if (!data?.user) {
@@ -51,6 +69,10 @@ export const BookCard = ({ book, read, className, ...rest }: BookCardProps) => {
 
     setViewRatingTextArea(true);
   };
+
+  useEffect(() => {
+    fetchRatingToBook();
+  }, []);
 
   return (
     <Sheet>
@@ -194,28 +216,20 @@ export const BookCard = ({ book, read, className, ...rest }: BookCardProps) => {
           )}
 
           <div className="grid grid-cols-1 gap-6">
-            <RatingCommentCard
-              imageUri="https://github.com/diego3g.png"
-              name="Diego"
-              ratingCount={4}
-              createdAt={new Date()}
-              description="Ótimo livro, comprei ele um tempo atrás e deixei parado na
-                estante, mas após um certo tempo, me deu um certo extase
-                momentaneo onde tive a vontade de ler, e com certeza foi uma
-                ótima escolha."
-              isActive
-            />
-
-            <RatingCommentCard
-              imageUri="https://github.com/axelvt.png"
-              name="Axel"
-              ratingCount={2}
-              createdAt={new Date()}
-              description="Ótimo livro, comprei ele um tempo atrás e deixei parado na
-                estante, mas após um certo tempo, me deu um certo extase
-                momentaneo onde tive a vontade de ler, e com certeza foi uma
-                ótima escolha."
-            />
+            {ratings &&
+              ratings.map((rating, i) => {
+                return (
+                  <RatingCommentCard
+                    key={i}
+                    imageUri={rating.user.image}
+                    name={rating.user.name}
+                    ratingCount={rating.rate}
+                    createdAt={rating.createdAt}
+                    description={rating.description}
+                    isActive={data?.user && data.user.id === rating.userId}
+                  />
+                );
+              })}
           </div>
         </main>
 

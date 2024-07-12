@@ -28,7 +28,7 @@ export const RatingCommentCard = ({
             width={40}
             height={40}
             alt=""
-            className="rounded-full w-10 h-10"
+            className="rounded-full w-10 h-10 object-cover"
           />
 
           <div className="flex flex-col">

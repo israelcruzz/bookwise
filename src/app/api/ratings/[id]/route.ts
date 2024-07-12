@@ -9,6 +9,14 @@ export async function GET(
     where: {
       bookId: params.id,
     },
+    include: {
+      user: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
   });
 
   if (!ratings) {
