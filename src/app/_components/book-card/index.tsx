@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { RatingStars } from "../rating-stars";
 import { HTMLAttributes, useEffect, useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { twMerge } from "tailwind-merge";
 import {
   Sheet,
@@ -28,10 +29,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { PiDoorOpenFill } from "react-icons/pi";
 import { IBook } from "@/app/(auth-routers)/page";
 import { signIn, useSession } from "next-auth/react";
 import { Rating } from "@prisma/client";
+import { toast } from "sonner";
 
 interface BookCardProps extends HTMLAttributes<HTMLDivElement> {
   book: IBook;
@@ -49,8 +50,43 @@ export const BookCard = ({ book, read, className, ...rest }: BookCardProps) => {
   const [viewRatingTextArea, setViewRatingTextArea] = useState<boolean>(false);
   const [viewModalLogin, setViewModalLogin] = useState<boolean>(false);
   const [ratings, setRatings] = useState<IRatings[]>();
-
+  const [ratingText, setRatingText] = useState("");
+  const [rate, setRate] = useState<number>(1);
+  const [loading, setLoading] = useState(false);
   const { data } = useSession();
+
+  const handleRatingStars = (currentRating: number) => {
+    setRate(currentRating);
+  };
+
+  const handleSubmitRating = async () => {
+    if (ratingText.length < 3) return;
+
+    setLoading(true);
+
+    try {
+      const rating = await fetch("/api/ratings", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          rate,
+          description: ratingText,
+          bookId: book.id,
+          userId: data?.user.id,
+        }),
+      });
+
+      const response = await rating.json();
+
+      setRatings((prev) => [response, ...prev!]);
+
+      setLoading(false);
+
+      toast.success("Avaliação Feita");
+    } catch (error) {
+      alert("deu ruim");
+    }
+  };
 
   const fetchRatingToBook = async () => {
     const url = `/api/ratings/${book.id}`;
@@ -176,40 +212,58 @@ export const BookCard = ({ book, read, className, ...rest }: BookCardProps) => {
               <header className="flex justify-between items-center">
                 <div className="flex gap-3 items-center">
                   <Image
-                    src="https://github.com/josepholiveira.png"
+                    src={data?.user.image ?? ""}
                     width={40}
                     height={40}
                     className="h-10 w-10 rounded-full object-cover"
                     alt=""
                   />
 
-                  <h2 className="text-base text-gray-100 font-bold">Joseph</h2>
+                  <h2 className="text-base text-gray-100 font-bold">
+                    {data?.user.name}
+                  </h2>
                 </div>
 
-                <RatingStars size={28} rating={5} />
+                <RatingStars
+                  size={28}
+                  rating={5}
+                  isEdit
+                  onChangeRating={handleRatingStars}
+                />
               </header>
 
               <textarea
                 name=""
                 id=""
+                value={ratingText}
                 rows={6}
                 className="rounded-sm bg-[#0E1116] px-5 py-3.5 text-gray-100 outline-none border border-[#303F73]"
                 placeholder="Escreva sua avaliação"
+                onChange={(e) => setRatingText(e.target.value)}
               />
 
               <div className="flex gap-2 justify-end">
                 <button
                   onClick={() => setViewRatingTextArea(false)}
-                  className="rounded-sm bg-[#252D4A] hover:bg-[#252D4A]/60 p-2"
+                  className="rounded-sm bg-[#252D4A] hover:bg-[#252D4A]/60 p-2 disabled:bg-[#252D4A]/60 disabled:cursor-not-allowed"
+                  disabled={loading}
                 >
-                  <X size={24} color="#50B2C0" />
+                  <X size={24} color="#8381D9" />
                 </button>
-                <button className="rounded-sm bg-[#252D4A] hover:bg-[#252D4A]/60 p-2">
-                  <Check
-                    size={24}
-                    color="#8381D9"
-                    onClick={() => setViewModalLogin(true)}
-                  />
+                <button
+                  className="rounded-sm bg-[#252D4A] hover:bg-[#252D4A]/60 p-2 disabled:bg-[#252D4A]/60 disabled:cursor-not-allowed"
+                  onClick={handleSubmitRating}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <AiOutlineLoading3Quarters
+                      className="animate-spin"
+                      size={24}
+                      color="#50B2C0"
+                    />
+                  ) : (
+                    <Check size={24} color="#50B2C0" />
+                  )}
                 </button>
               </div>
             </main>
@@ -221,8 +275,8 @@ export const BookCard = ({ book, read, className, ...rest }: BookCardProps) => {
                 return (
                   <RatingCommentCard
                     key={i}
-                    imageUri={rating.user.image}
-                    name={rating.user.name}
+                    imageUri={rating.user?.image ?? ""}
+                    name={rating.user?.name}
                     ratingCount={rating.rate}
                     createdAt={rating.createdAt}
                     description={rating.description}

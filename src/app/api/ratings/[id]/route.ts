@@ -17,6 +17,9 @@ export async function GET(
         },
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
   if (!ratings) {
